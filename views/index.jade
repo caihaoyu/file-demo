@@ -1,0 +1,55 @@
+extends layout
+
+block content
+	header(class="navbar navbar-inverse navbar-fixed-top bs-docs-nav",role="banner")
+		div.container
+			div(class="navbar-header")
+				button(class="navbar-toggle" data-target=".bs-navbar-collapse" data-toggle="collapse" type="button")
+					span(class="sr-only") Toggle navigation
+					span(class="icon-bar")
+					span(class="icon-bar")
+					span(class="icon-bar")
+				a(class="navbar-brand" href="../") Bootstrap
+			nav(class="collapse navbar-collapse bs-navbar-collapse", role="navigation")
+				ul(class="nav navbar-nav")
+					li.active 
+						a(href='/') 首页
+					li
+						a(href="/test") test	
+				ul(class="nav navbar-nav navbar-right")
+					div(style="padding-top:10px")
+						button(type="button",class="btn btn-primary", style="height: 30px; padding-top: 4px;",data-toggle="modal",data-target="#uploadModal") 上传文件
+
+	div#main
+		div.container-fluid
+			- for(var i=0;i<rowCount;i++){
+				- var list1= list.slice(i*4,i*4+4);
+					div.row
+						- for(var c=0;c<list1.length;c++){
+							div(class="col-md-3 col-sm-3")
+								a(href="/getImage?id=#{list1[c]._id}" class="thumbnail")
+									img( src="/getThumbnail?id=#{list1[c]._id}", alt="#{list1[c].title}")
+									p #{list1[c].title}
+						- }
+			- }
+	div#uploadModal(class="modal fade")
+		div(class="modal-dialog")
+			div(class="modal-content")
+				div(class="modal-header")
+					button(type="button",class="close",data-dismiss="modal",aria-hidden="true") &times;
+					h4(class="modal-title") 上传图片
+				div(class="modal-body")
+					form(role="form",method="post",enctype="multipart/form-data",id="form",action="/upload")
+						div.form-group
+							label(for="title") 图片标题
+							input(type="text",name="title",id="title",placeholder="请输入标题",class="form-control")
+						div.form-group
+							label(for="image") 图片标题
+							input#image(name="image",type="file",accept="image/*")
+				div(class="modal-footer")
+					button(type="button",class="btn btn-default",data-dismiss="modal") 关闭
+					button(type="button",class="btn btn-primary",onclick="submit()") 上传 
+	script(type="text/javascript"). 				
+		function submit() { $("#form").submit(); };
+	
+
