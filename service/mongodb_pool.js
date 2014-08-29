@@ -8,7 +8,7 @@ var memPool = dao.memPool;
 /*
  向mongodb插入文件
  */
-function insertFile(fileName, title, type, size, buffer, fileId, path, callback) {
+function insertFile(fileName, title, type, size, buffer, fileId, callback) {
     if (callback && typeof (callback) == "function") {
         //从连接池中取出连接
         pool.acquire(function (err, db) {
@@ -23,8 +23,7 @@ function insertFile(fileName, title, type, size, buffer, fileId, path, callback)
                     "mime_type": type,
                     "type": "bson",
                     "file_id": fileId,
-                    "date": new Date(),
-                    "path": path
+                    "date": new Date()
                 }, function (err, docs) {
                     // var collection1=db.collection("file_map");
                     // collection1.insert({"name":name,"type":"bson","fileId":docs[0]._id},function(err,docs1){
@@ -54,8 +53,7 @@ function insertFile(fileName, title, type, size, buffer, fileId, path, callback)
                                 "type": "grid",
                                 "file_id": fileId,
                                 "date": new Date(),
-                                "grid_id": result._id,
-                                "path": path
+                                "grid_id": result._id
                             }, function (err, docs) {
                                 // setMem(docs._id,buffer);
                                 pool.release(db);
