@@ -7,7 +7,6 @@ var pathO = require('path');
 var images = require("images");
 
 function upload(req, res) {
-    console.log(req.files.bin)
    saveImage(req.files.image.name, req.files.image.path, req.body.title, req.files.image.type, req.files.image.size,function (err,id) {
        saveSamllImage(id,  req.files.image.path,req.files.image.type, function (err,reslut) {
            res.redirect('/');
