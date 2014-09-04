@@ -5,4 +5,4 @@ file-demo
 使用express框架<br />
 需要先运行
 ----------------------------------- 
-    npm install package.json    
+    npm install
