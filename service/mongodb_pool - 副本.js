@@ -1,10 +1,14 @@
 var dao=require('../dao/dao');
+var Q = require('q');
 var pool=dao.pool;
 var BSON=dao.BSON;
 var ObjectID=dao.ObjectID;
 var GridStore=dao.GridStore;
 var Grid=dao.Grid;
 var memPool=dao.memPool;
+var pool_acquire = Q.denodify(pool.acquire);
+db = pool_acquire();
+db.then(console.error,console.log);
   function insertFile(fileName,title,type,size,buffer){
      pool.acquire(function(err, db) {
         if(err) throw err;

@@ -14,8 +14,12 @@ router.get('/', function (req, res) {
         // add a week
         myDate.setDate(myDate.getDate() + 7);
         service.getThumbnail(id, function (data, mime_type) {
+            // console.log(res);
+            res.statusCode = 200;
+            // res.setHeader("Content-Type", mime_type);
+ 
             res.writeHead(200, {
-                'Content-Type': mime_type,
+                // 'Content-Type': mime_type,
                 'Cache-Control': 'public,max-age=0',
                 'Expires': myDate.toUTCString()
             });

@@ -18,6 +18,7 @@
     "cluster":"*",
     "connect-multiparty":"*",
     "memcached":"*",
-    "images":"*"
+    "images":"*",
+    "q":"*"
   }
 }

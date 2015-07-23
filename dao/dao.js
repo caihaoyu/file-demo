@@ -18,7 +18,6 @@ var pool = poolModule.Pool({
 		db.close();
 	},
 	max : 50,
-	min : 50,
 	idleTimeoutMillis : 1000 * 60 * 30,
 	log : false,
 });

@@ -5,15 +5,23 @@ var ObjectID = dao.ObjectID;
 var GridStore = dao.GridStore;
 var Grid = dao.Grid;
 var memPool = dao.memPool;
+// var Q = require('q');
+// var pool_acquire = Q.denodeify(pool.acquire);
+// pool_acquire().then(function(db){
+//     console.log("test2");
+//     return "cccc";
+// },function(err){
+//     console.log("test1");
+//     return "kk";
+// }).then(console.log,console.log);
 /*
  向mongodb插入文件
  */
 function insertFile(fileName, title, type, size, buffer, fileId, callback) {
     if (callback && typeof (callback) == "function") {
         //从连接池中取出连接
-        pool.acquire(function (err, db) {
-            if (err)
-                throw err;
+        pool.acquire(function(err,db){
+                
             //小于20k直接放进collection
             if (size / 1024 < 20) {
                 var collection = db.collection('file');
@@ -33,6 +41,7 @@ function insertFile(fileName, title, type, size, buffer, fileId, callback) {
                     //放回连接
                     var id = docs[0]._id;
                     pool.release(db);
+                    console.log(id);
                     callback(err, id);
 
                 });
@@ -100,13 +109,13 @@ function getThumbnail(fileId, callback) {
                 if (err) {
                     console.error(err);
                 }
-                // console.log(list);
                 if (list.thumbnail) {
                     if (list.thumbnail.type == "bson") {
                         pool.release(db);
                         // setMem(list._id,(list.data,list.mime_type);
                         callback(list.thumbnail.data, list.thumbnail.mime_type);
                     } else if (list.thumbnail.type == "grid") {
+                        // console.error(list.thumbnail);
                         // var gridStore = new GridStore(db, list.grid_id, 'r');
                         GridStore.read(db, list.thumbnail.grid_id, function (err, fileData) {
                             // callback(fileData)
@@ -185,7 +194,7 @@ function insertThumbnail(id, type, size, buffer, fileName, callback) {
                         }
                     },
                     function (err, reslut) {
-                        callback(err)
+                        callback(err,reslut)
                     });
 
 
